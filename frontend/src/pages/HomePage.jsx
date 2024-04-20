@@ -33,10 +33,10 @@ const HomePage = () => {
   }, [showToast, setPosts]);
 
   return (
-    <Flex gap="10" alignItems={"flex-start"}>
+    <Flex gap="10" alignItems={"flex-start"} mt={7}>
       <Box flex={70}>
         {!loading && posts.length === 0 && (
-          <h1>Let&apos;s go to follow someone to see their feed</h1>
+          <h1>Let&apos;s go to follow someone to see their post</h1>
         )}
 
         {loading && (
@@ -48,9 +48,8 @@ const HomePage = () => {
         {posts.map((post) => (
           <Post key={post._id} post={post} postedBy={post.postedBy} />
         ))}
-        
       </Box>
-      
+
       {/* SuggestedUsers */}
       <Box
         flex={30}

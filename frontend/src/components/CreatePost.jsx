@@ -26,6 +26,7 @@ import userAtom from "../atoms/userAtom";
 import useShowToast from "../hooks/useShowToast";
 import postsAtom from "../atoms/postsAtom";
 import { useParams } from "react-router-dom";
+// import { CreatePostLogo } from "../../assets/constants";
 
 const MAX_CHAR = 500;
 
@@ -99,6 +100,7 @@ const CreatePost = () => {
         size={{ base: "sm", sm: "md" }}
       >
         <AddIcon />
+        {/* <CreatePostLogo /> */}
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
