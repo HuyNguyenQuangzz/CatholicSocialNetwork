@@ -9,12 +9,14 @@ import { useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { Link as RouterLink } from "react-router-dom";
 import useFollowUnfollow from "../hooks/useFollowUnfollow";
+// import postsAtom from "../atoms/postsAtom";
 
 // eslint-disable-next-line react/prop-types
 const UserHeader = ({ user }) => {
   const toast = useToast();
   const currentUser = useRecoilValue(userAtom); // logged in user
   const { handleFollowUnfollow, following, updating } = useFollowUnfollow(user);
+  // const [posts, setPosts] = useRecoilState(postsAtom);
 
   const copyURL = () => {
     const currentURL = window.location.href;
@@ -72,9 +74,7 @@ const UserHeader = ({ user }) => {
 
       {currentUser?._id === user._id && (
         <Link as={RouterLink} to="/update">
-          <Button size={"sm"} w={600} bg={""}>
-            Update Your Profile
-          </Button>
+          <Button size={"sm"}>Update Your Profile</Button>
         </Link>
       )}
       {currentUser?._id !== user._id && (
@@ -84,7 +84,10 @@ const UserHeader = ({ user }) => {
       )}
       <Flex w={"full"} justifyContent={"space-between"}>
         <Flex gap={2} alignItems={"center"}>
+          {/* <Text color={"gray.light"}>{user.posts.length} posts</Text> */}
+          <Text color={"gray.light"}>{user.following.length} following</Text>
           <Text color={"gray.light"}>{user.followers.length} followers</Text>
+
           {/* <Box w="1" h="1" bg={"gray.light"} borderRadius={"full"}></Box> */}
           {/* <Link color={"gray.light"}>instagram.com</Link> */}
         </Flex>

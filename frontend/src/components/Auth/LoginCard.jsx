@@ -13,6 +13,8 @@ import {
   useColorModeValue,
   Link,
   Checkbox,
+  FormErrorMessage,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -20,6 +22,8 @@ import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authAtom";
 import useShowToast from "../../hooks/useShowToast";
 import userAtom from "../../atoms/userAtom";
+
+// import * as yup from "yup";
 
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,7 +35,14 @@ export default function LoginCard() {
     username: "",
     password: "",
   });
+
+  // const schema = yup.object().shape({
+  //   username: yup.string().min(3).required(),
+  //   password: yup.string().min(6).required(),
+  // });
+
   const showToast = useShowToast();
+  // const errors = handleLogin();
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -84,11 +95,16 @@ export default function LoginCard() {
           }}
         >
           <Stack spacing={4}>
-            <FormControl isRequired>
+            <FormControl
+              // isInvalid={!!errors?.email?.message}
+              // errortext={errors?.email?.message}
+              isRequired
+            >
               <FormLabel>Username</FormLabel>
               <Input
                 id="username"
                 type="text"
+                placeholder="Enter your username"
                 value={inputs.username}
                 onChange={(e) =>
                   setInputs((inputs) => ({
@@ -98,13 +114,22 @@ export default function LoginCard() {
                 }
                 onKeyPress={handleKeyPress}
               />
+              {/* <FormErrorMessage>{errors?.email?.message}</FormErrorMessage> */}
+              {/* <FormHelperText>
+                Your username must at least 3 characters
+              </FormHelperText> */}
             </FormControl>
-            <FormControl isRequired>
+            <FormControl
+              // isInvalid={!!errors?.password?.message}
+              // errortext={errors?.password?.message}
+              isRequired
+            >
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
                   value={inputs.password}
                   onChange={(e) =>
                     setInputs((inputs) => ({
@@ -126,6 +151,10 @@ export default function LoginCard() {
                   </Button>
                 </InputRightElement>
               </InputGroup>
+              {/* <FormErrorMessage>{errors?.password?.message}</FormErrorMessage> */}
+              {/* <FormHelperText>
+                Your password must at least 6 characters
+              </FormHelperText> */}
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Stack
@@ -147,10 +176,10 @@ export default function LoginCard() {
               <Button
                 loadingText="Logging in"
                 size="lg"
-                bg={useColorModeValue("gray.600", "gray.700")}
+                bg={useColorModeValue("gray.700", "gray.700")}
                 color={"white"}
                 _hover={{
-                  bg: useColorModeValue("gray.700", "gray.800"),
+                  bg: useColorModeValue("blue", "gray.800"),
                 }}
                 onClick={handleLogin}
                 isLoading={loading}

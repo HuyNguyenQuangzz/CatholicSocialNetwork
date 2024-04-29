@@ -1,5 +1,5 @@
 import { Box, Link, Tooltip } from "@chakra-ui/react";
-import { LiaShoppingBagSolid } from "react-icons/lia";
+import { MdOutlineSettings } from "react-icons/md";
 import { Link as RouterLink } from "react-router-dom";
 
 const Settings = () => {
@@ -15,7 +15,7 @@ const Settings = () => {
       <Link
         display={"flex"}
         as={RouterLink}
-        to={`/shopping`}
+        to={`/settings`}
         alignItems={"center"}
         gap={4}
         _hover={{ bg: "whiteAlpha.400" }}
@@ -25,8 +25,8 @@ const Settings = () => {
         justifyContent={{ base: "center", md: "flex-start" }}
       >
         {/* <Avatar size={"sm"} src={authUser?.profilePic || ""} /> */}
-        <LiaShoppingBagSolid size={24} />
-        <Box display={{ base: "none", md: "block" }}>Shopping</Box>
+        <MdOutlineSettings size={24} />
+        <Box display={{ base: "none", md: "block" }}>Setting</Box>
       </Link>
     </Tooltip>
   );

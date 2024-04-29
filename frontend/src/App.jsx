@@ -12,6 +12,7 @@ import CreatePost from "./components/CreatePost";
 import ChatPage from "./pages/ChatPage";
 import { SettingsPage } from "./pages/SettingsPage";
 
+
 import PageLayout from "./layouts/PageLayout/PageLayout";
 
 function App() {
@@ -63,6 +64,14 @@ function App() {
           path="/settings"
           element={user ? <SettingsPage /> : <Navigate to={"/auth"} />}
         />
+         {/* <Route
+          path="/shopping"
+          element={user ? <ShoppingPage /> : <Navigate to={"/auth"} />}
+        /> */}
+         {/* <Route
+          path="/cart"
+          element={user ? <CartPage /> : <Navigate to={"/auth"} />}
+        /> */}
       </Routes>
        </Container>
       </Box> 

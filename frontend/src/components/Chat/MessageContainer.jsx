@@ -19,7 +19,7 @@ import {
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../../atoms/userAtom.js";
 import { useSocket } from "../../context/SocketContext.jsx";
-import messageSound from "../../assets/sounds/news-ting.mp3";
+import messageSound from "../../assets/sounds/messageSound.mp3";
 const MessageContainer = () => {
   const showToast = useShowToast();
   const selectedConversation = useRecoilValue(selectedConversationAtom);

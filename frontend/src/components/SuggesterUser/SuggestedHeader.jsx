@@ -1,31 +1,35 @@
 import { Avatar, Button, Flex, Text } from "@chakra-ui/react";
 import useLogout from "../../hooks/useLogout";
-// import authAtom from "../../store/authStore";
 import { Link } from "react-router-dom";
-import authScreenAtom from "../../atoms/authAtom";
+// import authScreenAtom from "../../atoms/authAtom";
+import { useRecoilValue } from "recoil";
+import userAtom from "../../atoms/userAtom";
 
 const SuggestedHeader = () => {
-  const { handleLogout, isLoggingOut } = useLogout();
-  const authUser = authScreenAtom((state) => state.user);
+  // const { handleLogout, isLoggingOut } = useLogout();
+  const logout = useLogout();
+
+  // const authUser = authScreenAtom((state) => state.user);
+  const authUser = useRecoilValue(userAtom);
 
   if (!authUser) return null;
 
   return (
-    <Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
+    <Flex
+      justifyContent={"space-between"}
+      alignItems={"center"}
+      w={"full"}
+      mt={-14}
+      mb={5}
+      // position={"fixed"}
+    >
       <Flex alignItems={"center"} gap={2}>
-        <Link
-        // to={`${authUser.username}`}
-        >
-          <Avatar
-            size={"lg"}
-            // src={authUser.profilePicURL}
-          />
+        <Link to={`${authUser.username}`}>
+          <Avatar size={"lg"} src={authUser.profilePic} />
         </Link>
-        <Link
-        // to={`${authUser.username}`}
-        >
+        <Link to={`${authUser.username}`}>
           <Text fontSize={12} fontWeight={"bold"}>
-            {/* {authUser.username} */}
+            {authUser.username}
           </Text>
         </Link>
       </Flex>
@@ -36,8 +40,7 @@ const SuggestedHeader = () => {
         fontSize={14}
         fontWeight={"medium"}
         color={"blue.400"}
-        onClick={handleLogout}
-        isLoading={isLoggingOut}
+        onClick={logout}
         cursor={"pointer"}
       >
         Log out

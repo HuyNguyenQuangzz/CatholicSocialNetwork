@@ -26,7 +26,8 @@ import userAtom from "../../atoms/userAtom";
 import useShowToast from "../../hooks/useShowToast";
 import postsAtom from "../../atoms/postsAtom";
 import { useParams } from "react-router-dom";
-import { CreatePostLogo } from "../../assets/constants";
+import { IoMdAddCircleOutline } from "react-icons/io";
+// import { CreatePostLogo } from "../../assets/constants";
 
 const MAX_CHAR = 500;
 
@@ -109,7 +110,8 @@ const CreatePost = () => {
           justifyContent={{ base: "center", md: "flex-start" }}
           onClick={onOpen}
         >
-          <CreatePostLogo />
+          {/* <CreatePostLogo /> */}
+          <IoMdAddCircleOutline size={24} />
           <Box display={{ base: "none", md: "block" }}>Create Post</Box>
         </Flex>
       </Tooltip>

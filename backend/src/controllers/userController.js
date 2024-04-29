@@ -1,103 +1,8 @@
 import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
-// import bcrypt from "bcryptjs";
-// import generateTokenAndSetCookie from "../utils/helpers/generateTokenAndSetCookie.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
 
-// Register account
-const signupUser = async (req, res) => {
-  try {
-    const { name, email, username, password } = req.body;
-    const user = await User.findOne({ $or: [{ email }, { username }] });
-
-    if (user) {
-      return res.status(400).json({ error: "User already exists" });
-    }
-    // hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // create a new account and save it to the database
-    const newUser = new User({
-      name,
-      email,
-      username,
-      password: hashedPassword,
-    });
-    await newUser.save();
-
-    // token
-    if (newUser) {
-      generateTokenAndSetCookie(newUser._id, res);
-
-      res.status(201).json({
-        _id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        username: newUser.username,
-        phone: newUser.phone,
-        location: newUser.location,
-        admin: newUser.admin,
-        bio: newUser.bio,
-        profilePic: newUser.profilePic,
-      });
-    } else {
-      res.status(400).json({ error: "Invalid user data" });
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in register user: ", err.message);
-  }
-};
-
-// Login
-const loginUser = async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
-    // use bcrypt to compare password input with password hash
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      user?.password || ""
-    );
-
-    if (!user || !isPasswordCorrect)
-      return res.status(400).json({ error: "Invalid username or password" }); // handle to someone know what wrong in(especial hacker)
-
-    if (user.isFrozen) {
-      user.isFrozen = false;
-      await user.save();
-    }
-
-    generateTokenAndSetCookie(user._id, res);
-
-    res.status(200).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      phone: user.phone,
-      location: user.location,
-      admin: user.admin,
-      bio: user.bio,
-      profilePic: user.profilePic,
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-    console.log("Error in Login User: ", error.message);
-  }
-};
-// Logout
-const logoutUser = (req, res) => {
-  try {
-    res.cookie("jwt", "", { maxAge: 1 });
-    res.status(200).json({ message: "User logged out successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in signupUser: ", err.message);
-  }
-};
 // Get a list of users(all users)
 const getUserList = async (req, res) => {
   try {
@@ -107,17 +12,102 @@ const getUserList = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+// for user profile
+const updateUser = async (req, res) => {
+  const { name, email, username, password, bio } = req.body;
+  let { profilePic } = req.body;
 
+  const userId = req.user._id;
+  try {
+    let user = await User.findById(userId);
+    if (!user) return res.status(400).json({ error: "User not found" });
+
+    if (req.params.id !== userId.toString())
+      return res
+        .status(400)
+        .json({ error: "You cannot update other user's profile" });
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      user.password = hashedPassword;
+    }
+
+    if (profilePic) {
+      if (user.profilePic) {
+        await cloudinary.uploader.destroy(
+          user.profilePic.split("/").pop().split(".")[0]
+        );
+      }
+
+      const uploadedResponse = await cloudinary.uploader.upload(profilePic);
+      profilePic = uploadedResponse.secure_url;
+    }
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.username = username || user.username;
+    user.profilePic = profilePic || user.profilePic;
+    user.bio = bio || user.bio;
+
+    user = await user.save();
+
+    // Find all posts that this user replied and update username and userProfilePic fields
+    await Post.updateMany(
+      { "replies.userId": userId },
+      {
+        $set: {
+          "replies.$[reply].username": user.username,
+          "replies.$[reply].userProfilePic": user.profilePic,
+        },
+      },
+      { arrayFilters: [{ "reply.userId": userId }] }
+    );
+
+    // password should be null in response
+    user.password = null;
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log("Error in updateUser: ", err.message);
+  }
+};
+// for admin
+const updateUserForAdmin = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const data = req.body;
+    if (!userId) {
+      return res.status(200).json({
+        status: "ERR",
+        message: "The userId is required",
+      });
+    }
+    const response = await UserService.updateUser(userId, data);
+    return res.status(200).json(response);
+  } catch (e) {
+    return res.status(404).json({
+      message: e,
+    });
+  }
+};
 // Delete user
 const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(200).json({
+        status: "ERR",
+        message: "The userId is required",
+      });
+    }
     res.status(200).json("Delete user successfully");
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
-
+// STOP HERE
 // Search user
 const findUser = async (req, res) => {
   try {
@@ -191,67 +181,6 @@ const followUnFollowUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
-  const { name, email, username, password, bio } = req.body;
-  let { profilePic } = req.body;
-
-  const userId = req.user._id;
-  try {
-    let user = await User.findById(userId);
-    if (!user) return res.status(400).json({ error: "User not found" });
-
-    if (req.params.id !== userId.toString())
-      return res
-        .status(400)
-        .json({ error: "You cannot update other user's profile" });
-
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-      user.password = hashedPassword;
-    }
-
-    if (profilePic) {
-      if (user.profilePic) {
-        await cloudinary.uploader.destroy(
-          user.profilePic.split("/").pop().split(".")[0]
-        );
-      }
-
-      const uploadedResponse = await cloudinary.uploader.upload(profilePic);
-      profilePic = uploadedResponse.secure_url;
-    }
-
-    user.name = name || user.name;
-    user.email = email || user.email;
-    user.username = username || user.username;
-    user.profilePic = profilePic || user.profilePic;
-    user.bio = bio || user.bio;
-
-    user = await user.save();
-
-    // Find all posts that this user replied and update username and userProfilePic fields
-    await Post.updateMany(
-      { "replies.userId": userId },
-      {
-        $set: {
-          "replies.$[reply].username": user.username,
-          "replies.$[reply].userProfilePic": user.profilePic,
-        },
-      },
-      { arrayFilters: [{ "reply.userId": userId }] }
-    );
-
-    // password should be null in response
-    user.password = null;
-
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-    console.log("Error in updateUser: ", err.message);
-  }
-};
-
 const getSuggestedUsers = async (req, res) => {
   try {
     // exclude the current user from suggested users array and exclude users that current user is already following
@@ -299,9 +228,7 @@ const freezeAccount = async (req, res) => {
 };
 
 export {
-  // signupUser,
-  // loginUser,
-  // logoutUser,
+  updateUserForAdmin,
   getUserList,
   followUnFollowUser,
   updateUser,

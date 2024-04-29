@@ -1,5 +1,6 @@
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
-import { MessagesLogo } from "../../assets/constants";
+import { FaRegMessage } from "react-icons/fa6";
+// import { RiChatNewLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -7,7 +8,7 @@ const Chat = () => {
   return (
     <Tooltip
       hasArrow
-      label={"Notifications"}
+      label={"Chat"}
       placement="right"
       ml={1}
       openDelay={500}
@@ -22,7 +23,9 @@ const Chat = () => {
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}
       >
-        <MessagesLogo />
+        {/* <MessagesLogo /> */}
+        <FaRegMessage size={24} />
+        {/* <RiChatNewLine size={24} /> */}
         <Link as={RouterLink} to={`/chat`}>
           <Box display={{ base: "none", md: "block" }}>Chat Box</Box>
         </Link>

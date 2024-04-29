@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// const mongoose = require("mongoose");
 
 // Thông tin đơn hàng:
 // Tên khách hàng: Tên đầy đủ của khách hàng.

@@ -88,7 +88,8 @@
 
 // COPY AND PASTE AS THE STARTER CODE FOR THE SEARCH COMPONENT
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
-import { SearchLogo } from "../../assets/constants";
+// import { SearchLogo } from "../../assets/constants";
+import { IoSearch } from "react-icons/io5";
 
 const Search = () => {
   return (
@@ -110,7 +111,8 @@ const Search = () => {
           w={{ base: 10, md: "full" }}
           justifyContent={{ base: "center", md: "flex-start" }}
         >
-          <SearchLogo />
+          {/* <SearchLogo /> */}
+          <IoSearch size={24} />
           <Box display={{ base: "none", md: "block" }}>Search</Box>
         </Flex>
       </Tooltip>

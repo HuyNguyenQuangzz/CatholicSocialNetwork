@@ -1,16 +1,13 @@
-import { Button, Flex, Image, Link, useColorMode } from "@chakra-ui/react";
+import { Flex, Image, Link, useColorMode } from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { AiFillHome } from "react-icons/ai";
 import { RxAvatar } from "react-icons/rx";
-import { Link as RouterLink } from "react-router-dom";  
-import { FiLogOut } from "react-icons/fi";
-import useLogout from "../hooks/useLogout";
+import { Link as RouterLink } from "react-router-dom";
 import authScreenAtom from "../atoms/authAtom";
 import {
   MdNotificationsNone,
   MdOutlineChatBubbleOutline,
-  MdOutlineSettings,
 } from "react-icons/md";
 import { CiShoppingCart } from "react-icons/ci";
 import { LiaShoppingBagSolid } from "react-icons/lia";
@@ -18,7 +15,6 @@ import { LiaShoppingBagSolid } from "react-icons/lia";
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const user = useRecoilValue(userAtom);
-  const logout = useLogout();
   const setAuthScreen = useSetRecoilState(authScreenAtom);
 
   return (
@@ -29,7 +25,13 @@ const Header = () => {
       mb={1}
       position={"sticky"}
       top={0}
-      // bg={"white"}
+      bg={colorMode === "light" ? "base" : "dark-lg"}
+      w={"full"}
+      // zIndex={999}
+      p={4}
+      rounded={"lg"}
+
+      // shadow={colorMode === "light" ? "base" : "dark-lg"}
     >
       {!user && (
         <Link
@@ -73,30 +75,28 @@ const Header = () => {
           <Link as={RouterLink} to={`/${user.username}`}>
             <RxAvatar size={24} />
           </Link>
-
-          <Link as={RouterLink} to={`/settings`}>
-            <MdNotificationsNone size={24} />
-          </Link>
-
-          <Link as={RouterLink} to={`/settings`}>
-            <LiaShoppingBagSolid size={24} />
-          </Link>
-
           <Link as={RouterLink} to={`/chat`}>
             <MdOutlineChatBubbleOutline size={24} />
           </Link>
 
-          <Link as={RouterLink} to={`/settings`}>
-            <CiShoppingCart size={24} />
+          <Link as={RouterLink} to={`/shopping`}>
+            <LiaShoppingBagSolid size={24} />
           </Link>
 
+          <Link as={RouterLink} to={`/notification`}>
+            <MdNotificationsNone size={24} />
+          </Link>
+          {/* <Link as={RouterLink} to={`/cart`} pl={500}>
+            <CiShoppingCart size={30} />
+          </Link> */}
+          {/* 
           <Link as={RouterLink} to={`/settings`}>
             <MdOutlineSettings size={24} />
           </Link>
 
           <Button size={"xxs"} onClick={logout}>
             <FiLogOut size={24} />
-          </Button>
+          </Button> */}
         </Flex>
       )}
 

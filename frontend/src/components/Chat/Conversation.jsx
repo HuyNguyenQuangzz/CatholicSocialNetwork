@@ -24,6 +24,8 @@ const Conversation = ({ conversation, isOnline }) => {
   );
   const colorMode = useColorMode();
 
+  // API CHAT GPT : sk-proj-UJllcyj5jWkF9lNlxW7dT3BlbkFJ1fI7mspkTKXxy6dvsEOo
+
   console.log("selectedConverstion", selectedConversation);
   return (
     <Flex
