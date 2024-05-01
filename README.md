@@ -38,26 +38,26 @@ Functionalities:
 
 ### Feature 1: Network
 
--Feature List:
-Tech stack: MERN + Socket.io + Chakra UI + Recoil
-Validation both Backend + Frontend
-Authentication & Authorization with JWT
-Create a Post
-Comment to a Post
-Delete a Post
-Like/Unlike a Post
+#### Feature List:
+- Tech stack: MERN + Socket.io + Chakra UI + Recoil
+- Validation both Backend + Frontend
+- Authentication & Authorization with JWT
+- Create a Post
+- Comment to a Post
+- Delete a Post
+- Like/Unlike a Post
 
-Follow/ Unfollow Users
-Freeze Your Account
+- Follow/ Unfollow Users
+- Freeze Your Account
 
-Dark/Light Mode
-Responsive Layout + UI
+- Dark/Light Mode
+- Responsive Layout + UI
 
-Chat Application with Image Support
-Seen/Unseen Status for Messages
-Notification sounds when received message/text message
+- Chat Application with Image Support
+- Seen/Unseen Status for Messages
+- Notification sounds when received message/text message
 
-Deployment
+- Deployment
 
 ### Feature 2: Shopping
 
@@ -69,17 +69,25 @@ Deployment
 
 ## How to set up .env file when you want to run
 
-PORT=...
-MONGO_URI=...
-JWT_SECRET=...
-CLOUDINARY_CLOUD_NAME=...
-CLOUDINARY_API_KEY=...
-CLOUDINARY_API_SECRET=...
+```js
+PORT=... example: 5000
+MONGO_URI=... your mongo url
+JWT_SECRET=... your jwt secret
+CLOUDINARY_CLOUD_NAME=... your cloud name
+CLOUDINARY_API_KEY=... your cloud api key
+CLOUDINARY_API_SECRET=... your cloud API secret
+```
 
 ## Start the application
 
-npm run dev in both backend and frontend
+```shell
+npm run dev
+```
+
+- Run in both backend and frontend
 
 ## Build the application
 
+```shell
 npm run build
+```

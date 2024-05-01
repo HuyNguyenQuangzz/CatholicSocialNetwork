@@ -127,16 +127,16 @@ const PostPage = () => {
         <Actions post={currentPost} />
       </Flex>
 
-      <Divider my={4} />
-
+      {/* <Divider my={4} /> */}
+{/* 
       <Flex justifyContent={"space-between"}>
-        <Flex gap={2} alignItems={"center"}>
-          <Text fontSize={"2xl"}>👋</Text>
+        <Flex gap={2} alignItems={"center"}> */}
+          {/* <Text fontSize={"2xl"}>👋</Text> */}
           {/* {2099 + (liked ? 1 : 0)} likes => example: 2099+2=2k1 likes*/}
-          <Text color={"gray.light"}>Get the app to like, reply and post.</Text>
-        </Flex>
-        <Button>Get</Button>
-      </Flex>
+          {/* <Text color={"gray.light"}>Get the app to like, reply and post.</Text> */}
+        {/* </Flex> */}
+        {/* <Button>Get</Button> */}
+      {/* </Flex> */}
 
       <Divider my={4} />
       {currentPost.replies.map((reply) => (
