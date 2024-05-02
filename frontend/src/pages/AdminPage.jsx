@@ -1,9 +1,12 @@
 // import React from "react";
 
+import Admin from "../components/Admin/Admin";
+
 export default function AdminPage() {
   return (
     <>
-      <div>Cart Page</div>
+      <div>Admin Page</div>
+      <Admin/>
     </>
   );
 }

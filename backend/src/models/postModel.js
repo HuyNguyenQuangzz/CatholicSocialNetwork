@@ -10,7 +10,7 @@ const postSchema = mongoose.Schema(
 		},
 		text: {
 			type: String,
-			maxLength: [500,"You can't have more than 500 characters"],
+			maxLength: [2000,"You can't have more than 2000 characters"],
 		},
 		img: {
 			type: String,

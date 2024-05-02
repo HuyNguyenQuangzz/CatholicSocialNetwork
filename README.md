@@ -12,7 +12,7 @@ Functionalities:
 
 ## 1. Techniques:
 
-## Organizing the code into separate modules for the frontend and backend. Using MVC (Model-View-Controller) and RESTful API (Representational State Transfer) are two different concepts that often work together in web development
+### Organizing the code into separate modules for the frontend and backend. Using MVC (Model-View-Controller) and RESTful API (Representational State Transfer) are two different concepts that often work together in web development
 
 - NodeJS: JavaScript runtime
 
@@ -39,6 +39,7 @@ Functionalities:
 ### Feature 1: Network
 
 #### Feature List:
+
 - Tech stack: MERN + Socket.io + Chakra UI + Recoil
 - Validation both Backend + Frontend
 - Authentication & Authorization with JWT
@@ -59,13 +60,13 @@ Functionalities:
 
 - Deployment
 
-### Feature 2: Shopping
+### Feature 2: Shopping (expected in the future)
 
-### Feature 3: Virtual Explore Church
+### Feature 3: Virtual Explore (expected in the future)
 
-### Feature 4: Music
+### Feature 4: Music (expected in the future)
 
-### Feature 4: Using AI into my application
+### Feature 4: Using AI into my (expected in the future)
 
 ## How to set up .env file when you want to run
 
@@ -77,6 +78,8 @@ CLOUDINARY_CLOUD_NAME=... your cloud name
 CLOUDINARY_API_KEY=... your cloud api key
 CLOUDINARY_API_SECRET=... your cloud API secret
 ```
+
+## 4. How to run the Catholic Social Network application
 
 ## Start the application
 
@@ -91,3 +94,7 @@ npm run dev
 ```shell
 npm run build
 ```
+
+## 5. Product Released
+
+- Link:

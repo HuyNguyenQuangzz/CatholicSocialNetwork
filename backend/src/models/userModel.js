@@ -28,6 +28,13 @@ const userSchema = mongoose.Schema(
       max: [50, "Can not more than 50 characters"],
       unique: true,
     },
+    // gender
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+      required: true,
+    },
+    dob: { type: Date, required: true },
     // password
     password: {
       type: String,

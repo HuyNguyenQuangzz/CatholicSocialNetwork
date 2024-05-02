@@ -56,7 +56,7 @@ const PageLayoutSpinner = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Spinner size="xl" />
+      <Spinner size="xl" /> 
     </Flex>
   );
 };

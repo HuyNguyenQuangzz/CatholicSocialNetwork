@@ -14,7 +14,7 @@ const getUserList = async (req, res) => {
 };
 // for user profile
 const updateUser = async (req, res) => {
-  const { name, email, username, password, bio } = req.body;
+  const { name, email, username, password,gender, dob,address,phone ,bio } = req.body;
   let { profilePic } = req.body;
 
   const userId = req.user._id;
@@ -46,8 +46,12 @@ const updateUser = async (req, res) => {
 
     user.name = name || user.name;
     user.email = email || user.email;
+    user.gender = gender || user.gender;
+    user.dob = dob || user.dob;
     user.username = username || user.username;
     user.profilePic = profilePic || user.profilePic;
+    user.address = address || user.address;
+    user.phone = phone || user.phone;
     user.bio = bio || user.bio;
 
     user = await user.save();

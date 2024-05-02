@@ -28,7 +28,7 @@ import postsAtom from "../atoms/postsAtom";
 import { useParams } from "react-router-dom";
 // import { CreatePostLogo } from "../../assets/constants";
 
-const MAX_CHAR = 500;
+const MAX_CHAR = 2000;
 
 const CreatePost = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

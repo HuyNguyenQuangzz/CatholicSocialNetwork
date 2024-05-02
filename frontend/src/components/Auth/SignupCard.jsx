@@ -14,6 +14,8 @@ import {
   useColorModeValue,
   Link,
   FormErrorMessage,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -31,6 +33,8 @@ export default function SignupCard() {
     name: "",
     username: "",
     email: "",
+    dob: "",
+    gender: "Male",
     password: "",
     confirmPassword: "",
   });
@@ -42,7 +46,44 @@ export default function SignupCard() {
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     username: yup.string().required("Username is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
+    email: yup
+      .string()
+      .email("Invalid email")
+      .required("Email is required")
+      .matches(
+        /@(gmail|yahoo|google)\.com$/,
+        "Invalid email format. It should have @gmail.com, @google.com or @yahoo.com"
+      ),
+    gender: yup.string().required("Gender is required"),
+    // users lest than 13 years old can not using this application
+    dob: yup
+      .date()
+      .typeError("Date of Birth can not blank!")
+      .required("Date of birth is required")
+      .max(new Date(), "Date of birth cannot be in the future")
+      .test("age", "You must be at least 13 years old", function (value) {
+        const cutoffDate = new Date();
+        cutoffDate.setFullYear(cutoffDate.getFullYear() - 13);
+        return new Date(value) <= cutoffDate;
+      })
+      .test(
+        "max-age",
+        "You cannot be older than 125 years old",
+        function (value) {
+          const maxAgeDate = new Date();
+          maxAgeDate.setFullYear(maxAgeDate.getFullYear() - 125);
+          return new Date(value) >= maxAgeDate;
+        }
+      )
+      .test(
+        "not-in-future",
+        "Date of birth cannot be in the future",
+        function (value) {
+          return new Date(value) <= new Date();
+        }
+      ),
+
+    // password validation
     password: yup
       .string()
       .matches(
@@ -148,6 +189,40 @@ export default function SignupCard() {
               />
               <FormErrorMessage>{inputErrors.email}</FormErrorMessage>
             </FormControl>
+
+            <FormControl isRequired isInvalid={inputErrors.gender}>
+              <FormLabel>Gender</FormLabel>
+              <RadioGroup
+                // defaultValue="Male"
+                // value={inputs.gender}
+                defaultValue={inputs.gender}
+                // onChange={(event) => {
+                //   setInputs({ ...inputs, gender: event.target.value });
+                // }}
+                // onChange={handleGenderChange}
+                onChange={(value) => setInputs({ ...inputs, gender: value })}
+                name="gender"
+              >
+                <Stack direction="row" spacing="24px">
+                  <Radio value="Male">Male</Radio>
+                  <Radio value="Female">Female</Radio>
+                  <Radio value="Other">Other</Radio>
+                </Stack>
+              </RadioGroup>
+              <FormErrorMessage>{inputErrors.gender}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isRequired isInvalid={inputErrors.dob}>
+              <FormLabel>Date of Birth</FormLabel>
+              <Input
+                type="date"
+                placeholder="Enter your date of birth"
+                onChange={(e) => setInputs({ ...inputs, dob: e.target.value })}
+                value={inputs.dob}
+              />
+              <FormErrorMessage>{inputErrors.dob}</FormErrorMessage>
+            </FormControl>
+
             <FormControl isRequired isInvalid={inputErrors.password}>
               <FormLabel>Password</FormLabel>
               <InputGroup>

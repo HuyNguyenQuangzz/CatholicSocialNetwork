@@ -91,6 +91,20 @@ const UserHeader = ({ user }) => {
           {/* <Box w="1" h="1" bg={"gray.light"} borderRadius={"full"}></Box> */}
           {/* <Link color={"gray.light"}>instagram.com</Link> */}
         </Flex>
+{/* 
+        <Flex w={"full"} justifyContent={"space-between"}>
+          <Flex gap={2} alignItems={"center"}>
+            {user.followers.map((follower) => (
+              <Text key={follower.id}>{follower.name}</Text>
+            ))}
+          </Flex>
+          <Flex gap={2} alignItems={"center"}>
+            {user.following.map((following) => (
+              <Text key={following.id}>{following.name}</Text>
+            ))}
+          </Flex>
+        </Flex> */}
+
         <Flex>
           {/* <Box className="icon-container">
             <BsInstagram size={24} cursor={"pointer"} />

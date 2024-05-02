@@ -6,14 +6,17 @@ import { BiLogOut } from "react-icons/bi";
 import useLogout from "../../hooks/useLogout";
 import SidebarItems from "./SidebarItems";
 
+import { useColorMode } from "@chakra-ui/react";
+
 const Sidebar = () => {
   // const { handleLogout, isLoggingOut } = useLogout();
   const logout = useLogout();
+  const { colorMode } = useColorMode();
 
   return (
     <Box
       height={"100vh"}
-      borderRight={"1px solid"}
+      // borderRight={"1px solid"}
       borderColor={"whiteAlpha.300"}
       py={8}
       position={"sticky"}

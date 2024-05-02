@@ -9,7 +9,7 @@ import {
   MdNotificationsNone,
   MdOutlineChatBubbleOutline,
 } from "react-icons/md";
-import { CiShoppingCart } from "react-icons/ci";
+// import { CiShoppingCart } from "react-icons/ci";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 
 const Header = () => {
@@ -30,7 +30,7 @@ const Header = () => {
       // zIndex={999}
       p={4}
       rounded={"lg"}
-
+      backdropFilter={"blur(10px)"} // Add blur effect
       // shadow={colorMode === "light" ? "base" : "dark-lg"}
     >
       {!user && (

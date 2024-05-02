@@ -5,7 +5,7 @@ import generateTokenAndSetCookie from "../utils/helpers/generateTokenAndSetCooki
 // Register account
 const registerUser = async (req, res) => {
   try {
-    const { name, email, username, password } = req.body;
+    const { name, email,gender,dob, username, password } = req.body;
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
     // Validate user data
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     const isCheckEmail = reg.test(email);
-    if (!name || !username || !email || !password) {
+    if (!name || !username || !email || !gender || !dob || !password) {
       return res.status(200).json({
         status: "ERR",
         message: "The input is required",
@@ -53,6 +53,8 @@ const registerUser = async (req, res) => {
     const newUser = new User({
       name,
       email,
+      gender,
+      dob,
       username,
       password: hashedPassword,
     });
@@ -68,6 +70,8 @@ const registerUser = async (req, res) => {
         _id: savedUser._id,
         name: savedUser.name,
         email: savedUser.email,
+        gender: savedUser.gender,
+        dob: savedUser.dob,
         username: savedUser.username,
         phone: savedUser.phone,
         location: savedUser.location,

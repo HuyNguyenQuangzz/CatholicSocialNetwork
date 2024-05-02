@@ -13,7 +13,8 @@ import { useEffect } from "react";
 import Comment from "../components/Comment";
 import useGetUserProfile from "../hooks/useGetUserProfile";
 import useShowToast from "../hooks/useShowToast";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
@@ -27,6 +28,8 @@ const PostPage = () => {
   const { pid } = useParams();
   const currentUser = useRecoilValue(userAtom);
   const navigate = useNavigate();
+  const userLogin = useRecoilValue(userAtom);
+
 
   const currentPost = posts[0];
 
@@ -127,16 +130,23 @@ const PostPage = () => {
         <Actions post={currentPost} />
       </Flex>
 
-      {/* <Divider my={4} /> */}
-{/* 
-      <Flex justifyContent={"space-between"}>
-        <Flex gap={2} alignItems={"center"}> */}
-          {/* <Text fontSize={"2xl"}>👋</Text> */}
-          {/* {2099 + (liked ? 1 : 0)} likes => example: 2099+2=2k1 likes*/}
-          {/* <Text color={"gray.light"}>Get the app to like, reply and post.</Text> */}
-        {/* </Flex> */}
-        {/* <Button>Get</Button> */}
-      {/* </Flex> */}
+      {!userLogin && (
+        <>
+          <Divider my={4} />
+          <Flex justifyContent={"space-between"}>
+            <Flex gap={2} alignItems={"center"}>
+              <Text fontSize={"2xl"}>👋</Text>
+              {/* {2099 + (liked ? 1 : 0)} likes => example: 2099+2=2k1 likes */}
+              <Text color={"gray.light"}>
+                Please Login or register aplication to like, reply and post.
+              </Text>
+            </Flex>
+            <Link as={RouterLink} to={`/auth`}>
+            <Button>Get</Button>
+            </Link>
+          </Flex>
+        </>
+      )}
 
       <Divider my={4} />
       {currentPost.replies.map((reply) => (
