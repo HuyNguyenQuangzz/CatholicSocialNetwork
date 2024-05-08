@@ -2,19 +2,115 @@ import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import generateTokenAndSetCookie from "../utils/helpers/generateTokenAndSetCookie.js";
 
 // Get a list of users(all users)
-const getUserList = async (req, res) => {
+// const getUserList = async (req, res) => {
+//   try {
+//     const user = await User.find();
+//     res.status(200).json({ user: user });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// };
+
+const createNewUser = async (req, res) => {
   try {
-    const user = await User.find();
-    res.status(200).json({ user: user });
+    const { name, email,gender,dob,bio,address,phone, username, password } = req.body;
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    // hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Validate user data
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    const isCheckEmail = reg.test(email);
+    if (!name || !username || !email || !gender || !dob || !password) {
+      return res.status(200).json({
+        status: "ERR",
+        message: "The input is required",
+      });
+    } else if (!isCheckEmail) {
+      return res.status(200).json({
+        status: "ERR",
+        message: "Email must valid",
+      });
+    }
+    if (!password || password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters long" });
+    }
+
+    if (
+      !/[A-Z]/.test(password) ||
+      !/[a-z]/.test(password) ||
+      !/\W/.test(password)
+    ) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least one uppercase letter, one lowercase letter, and one special character",
+      });
+    }
+
+    if (existingUser) {
+      // 400 Bad Request
+      return res
+        .status(400)
+        .json({ error: "User already exists, Please try again!" });
+    }
+
+    // create a new account and save it to the database
+    const newUser = new User({
+      name,
+      email,
+      gender,
+      dob,
+      phone,
+      address,
+      bio,
+      username,
+      password: hashedPassword,
+    });
+    // Save new user to database
+    const savedUser = await newUser.save();
+
+    // Generate token and set cookie
+    if (savedUser) {
+      generateTokenAndSetCookie(savedUser._id, savedUser.isAdmin, res);
+
+      // Return new user data
+      return res.status(201).json({
+        _id: savedUser._id,
+        name: savedUser.name,
+        email: savedUser.email,
+        gender: savedUser.gender,
+        dob: savedUser.dob,
+        username: savedUser.username,
+        phone: savedUser.phone,
+        address: savedUser.address,
+        isAdmin: savedUser.isAdmin,
+        bio: savedUser.bio,
+        profilePic: savedUser.profilePic,
+      });
+    } else {
+      res.status(400).json({ error: "Invalid User Data" });
+      // 400 Bad Request
+    }
   } catch (err) {
+    // 500 Internal Server Error
     res.status(500).json({ error: err.message });
+    console.log("Error in register user: ", err.message);
   }
 };
+
+
+
 // for user profile
 const updateUser = async (req, res) => {
-  const { name, email, username, password,gender, dob,address,phone ,bio } = req.body;
+  const { name, email, username, password, gender, dob, address, phone, bio } =
+    req.body;
   let { profilePic } = req.body;
 
   const userId = req.user._id;
@@ -119,6 +215,7 @@ const findUser = async (req, res) => {
     res.status(200).json({ user: user });
   } catch (err) {
     res.status(500).json({ error: err.message });
+    // res.status(500).json("User Not Found");
   }
 };
 
@@ -231,14 +328,46 @@ const freezeAccount = async (req, res) => {
   }
 };
 
+const getTotalPost = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const totalPost = await Post.countDocuments({ postedBy: userId });
+    res.status(200).json({ totalPost });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+const getFollowers = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const followers = await User.find({ following: userId });
+    res.status(200).json(followers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getUserList = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+// get all user for admin manager
+
 export {
+  createNewUser,
   updateUserForAdmin,
   getUserList,
   followUnFollowUser,
   updateUser,
   deleteUser,
+  getTotalPost,
   findUser,
   getUserProfile,
   getSuggestedUsers,
   freezeAccount,
+  getFollowers,
 };

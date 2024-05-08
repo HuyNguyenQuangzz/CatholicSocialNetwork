@@ -30,7 +30,6 @@ const PostPage = () => {
   const navigate = useNavigate();
   const userLogin = useRecoilValue(userAtom);
 
-
   const currentPost = posts[0];
 
   useEffect(() => {
@@ -79,18 +78,18 @@ const PostPage = () => {
   }
 
   if (!currentPost) return null;
-  console.log("currentPost", currentPost);
+  // console.log("currentPost", currentPost);
 
   return (
     <>
       <Flex>
         <Flex w={"full"} alignItems={"center"} gap={3}>
-          <Avatar src={user.profilePic} size={"md"} name="Mark Zuckerberg" />
+          <Avatar src={user.profilePic} size={"md"} name="John Doe" />
           <Flex>
             <Text fontSize={"sm"} fontWeight={"bold"}>
               {user.username}
             </Text>
-            <Image src="/verified.png" w="4" h={4} ml={4} />
+            <Image src="/verified.png" w="4" h={4} ml={1} mt={1} />
           </Flex>
         </Flex>
         <Flex gap={4} alignItems={"center"}>
@@ -126,6 +125,7 @@ const PostPage = () => {
         </Box>
       )}
 
+      {/* add hover pointer in actions */}
       <Flex gap={3} my={3}>
         <Actions post={currentPost} />
       </Flex>
@@ -138,11 +138,11 @@ const PostPage = () => {
               <Text fontSize={"2xl"}>👋</Text>
               {/* {2099 + (liked ? 1 : 0)} likes => example: 2099+2=2k1 likes */}
               <Text color={"gray.light"}>
-                Please Login or register aplication to like, reply and post.
+                Please Login or register application to like, reply and post.
               </Text>
             </Flex>
             <Link as={RouterLink} to={`/auth`}>
-            <Button>Get</Button>
+              <Button>Get</Button>
             </Link>
           </Flex>
         </>

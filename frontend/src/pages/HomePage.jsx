@@ -5,16 +5,19 @@ import Post from "../components/Post";
 import { useRecoilState } from "recoil";
 import postsAtom from "../atoms/postsAtom";
 import SuggestedUsers from "../components/SuggesterUser/SuggestedUsers";
+import NewFeed from "../components/NewFeed";
 
 const HomePage = () => {
   const [posts, setPosts] = useRecoilState(postsAtom);
   const [loading, setLoading] = useState(true);
+  // const [followedUsers, setFollowedUsers] = useState([]);
   const showToast = useShowToast();
   useEffect(() => {
     const getFeedPosts = async () => {
       setLoading(true);
       setPosts([]);
       try {
+        // Fetch posts from followed users
         const res = await fetch("/api/posts/feed");
         const data = await res.json();
         if (data.error) {
@@ -35,6 +38,8 @@ const HomePage = () => {
   return (
     <Flex gap="10" alignItems={"flex-start"} mt={7}>
       <Box flex={70}>
+        {/* new feed from vatican API */}
+        <NewFeed />
         {!loading && posts.length === 0 && (
           <h1>Let&apos;s go to follow someone to see their post</h1>
         )}
@@ -44,6 +49,8 @@ const HomePage = () => {
             <Spinner size="xl" />
           </Flex>
         )}
+
+        {/* also show following user post and current user post and filter newest post */}
 
         {posts.map((post) => (
           <Post key={post._id} post={post} postedBy={post.postedBy} />

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-
 import ProductCard from "./ProductCard";
 import { useRecoilState } from "recoil";
 
@@ -8,6 +7,10 @@ import { productsState } from "../../atoms/productAtom";
 
 import SearchBar from "./SearchBar";
 import PriceFilter from "./PriceFilter";
+import { Container, Flex, Heading } from "@chakra-ui/react";
+import Navbar from "./Navbar";
+import AboutUs from "../AboutUs";
+import Carousel from "./Carousel";
 
 const Home = () => {
   const [products, setProducts] = useRecoilState(productsState);
@@ -15,6 +18,10 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
+
+  // handle get all product with fetch API
+
+  // .then((res) => res.
 
   const handlePriceChange = (newValue) => {
     setMinPrice(newValue[0]);
@@ -31,77 +38,53 @@ const Home = () => {
     // setFilteredProducts(filtered);
   };
 
-  useEffect(() => {
-    const getCourses = async () => {
-      const token = localStorage.getItem("Auth");
-      const response = await axios.get(
-        "https://dummyjson.com/products?limit=0",
-        {
-          headers: { authorization: `Bearer ${token}` },
-        }
-      );
-      setProducts(response.data.products);
-      //console.log(response.data.products);
-    };
-
-    getCourses();
-  }, [setProducts]);
-
-  useEffect(() => {
-    const filtered = products
-      .filter(
-        (product) =>
-          product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.brand.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      .filter(
-        (product) => product.price >= minPrice && product.price <= maxPrice
-      );
-    setFilteredProducts(filtered);
-  }, [products, searchQuery, minPrice, maxPrice]);
+  // useEffect(() => {
+  //   const filtered = products
+  //     .filter(
+  //       (product) =>
+  //         product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //         product.brand.toLowerCase().includes(searchQuery.toLowerCase())
+  //     )
+  //     .filter(
+  //       (product) => product.price >= minPrice && product.price <= maxPrice
+  //     );
+  //   setFilteredProducts(filtered);
+  // }, [products, searchQuery, minPrice, maxPrice]);
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          marginTop: "15vh",
-        }}
-      >
-        <SearchBar onSearch={onSearch} />
-        <PriceFilter
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          onChange={handlePriceChange}
-        />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          paddingTop: 2,
-        }}
-      >
-        {
-          filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => {
-              return <ProductCard key={product.id} product={product} />;
-            })
-          ) : (
-            <p className="no-results">No results found, Please try again</p>
-          )
-          //  ( if(filteredProducts.length == 0 ){
-          //         return (<p className="no-results">No results found for your query.</p>)
-          //  }else
-          //   products.map((product) => {
-          //     return <ProductCard key={product.id} product={product} />;
-          //   }))
-        }
-      </div>
-    </div>
+    <>
+      <Navbar />
+
+      <Carousel />  
+      
+      <Container>
+        {/* <Heading>Cart</Heading> */}
+
+        <Flex>
+          <Heading>Search</Heading>
+          <SearchBar onSearch={onSearch} />
+          <PriceFilter
+          // minPrice={minPrice}
+          // maxPrice={maxPrice}
+          // onChange={handlePriceChange}
+          />
+        </Flex>
+
+        <Flex
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            width: "full",
+            justifyContent: "center",
+            paddingTop: 2,
+          }}
+        >
+          <Heading>Product List</Heading>
+          <ProductCard />
+        </Flex>
+      </Container>
+      <AboutUs />
+    </>
   );
 };
 

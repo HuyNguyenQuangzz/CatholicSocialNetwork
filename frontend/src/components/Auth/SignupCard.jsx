@@ -168,10 +168,11 @@ export default function SignupCard() {
                   <Input
                     type="text"
                     placeholder="Enter your username"
-                    onChange={(e) =>
-                      setInputs({ ...inputs, username: e.target.value })
-                    }
-                    value={inputs.username}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\s/g, ""); // Remove spaces
+                      setInputs({ ...inputs, username: value });
+                    }}
+                    value={inputs.username.replace(/\s/g, "")} // Remove spaces
                   />
                   <FormErrorMessage>{inputErrors.username}</FormErrorMessage>
                 </FormControl>

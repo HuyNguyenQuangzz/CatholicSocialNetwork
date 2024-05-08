@@ -221,6 +221,7 @@ const Post = ({ post, postedBy }) => {
       </Flex>
       {!post ? <Divider /> : null}
       {/* <Box h="1px" w={"full"} bg="gray.light" my={1}></Box> */}
+      
     </Link>
   );
 };

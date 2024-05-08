@@ -1,9 +1,6 @@
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { useLocation } from "react-router-dom";
-// import { useAuthState } from "react-firebase-hooks/auth";
-// import { auth } from "../../firebase/firebase";
-// import {authAtom} from "../../atoms/authAtom.js";
 import authScreenAtom from "../../atoms/authAtom";
 import { useRecoilValue } from "recoil";
 
@@ -14,21 +11,17 @@ import Navbar from "../../components/Navbar/Navbar";
 const PageLayout = ({ children }) => {
   const { pathname } = useLocation();
   const [user, loading] = useRecoilValue(authScreenAtom);
-  // const authScreenState = useRecoilValue(authScreenAtom);/
-  const canRenderSidebar = pathname !== "/auth" && user;
+  const canRenderSidebar = user && pathname !== "/auth";
   const canRenderNavbar = !user && !loading && pathname !== "/auth";
-  // const canRenderSidebar = "";
-  // const canRenderNavbar = "";
 
   const checkingUserIsAuth = !user && loading;
   if (checkingUserIsAuth) return <PageLayoutSpinner />;
-  // <PageLayoutSpinner />;
 
   return (
     <Flex flexDir={canRenderNavbar ? "column" : "row"}>
       {/* sidebar on the left */}
       {canRenderSidebar ? (
-        <Box w={{ base: "70px", md: "240px" }}>
+        <Box w={{ base: "70px", md: "200px" }}>
           <Sidebar />
         </Box>
       ) : null}
@@ -56,7 +49,7 @@ const PageLayoutSpinner = () => {
       alignItems="center"
       justifyContent="center"
     >
-      <Spinner size="xl" /> 
+      <Spinner size="xl" />
     </Flex>
   );
 };

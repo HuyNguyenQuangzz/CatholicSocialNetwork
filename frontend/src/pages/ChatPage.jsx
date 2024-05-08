@@ -11,7 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Conversation from "../components/Chat/Conversation";
-import { GiConversation } from "react-icons/gi";
+// import { GiConversation } from "react-icons/gi";
 import MessageContainer from "../components/Chat/MessageContainer";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";

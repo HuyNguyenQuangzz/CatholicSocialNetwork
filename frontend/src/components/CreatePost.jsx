@@ -103,18 +103,20 @@ const CreatePost = () => {
         {/* <CreatePostLogo /> */}
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="5xl">
         <ModalOverlay />
 
         <ModalContent>
-          <ModalHeader>Create Post</ModalHeader>
+          <ModalHeader textAlign={"center"}>Create Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
               <Textarea
-                placeholder="Post content goes here.."
+                placeholder="   What in your mind..."
                 onChange={handleTextChange}
                 value={postText}
+                size="5xl"
+                height={200}
               />
               <Text
                 fontSize="xs"
@@ -134,21 +136,25 @@ const CreatePost = () => {
               />
 
               <BsFillImageFill
-                style={{ marginLeft: "5px", cursor: "pointer" }}
-                size={16}
+                style={{
+                  marginLeft: "50%",
+                  cursor: "pointer",
+                  textAlign: "center",
+                }}
+                size={46}
                 onClick={() => imageRef.current.click()}
               />
             </FormControl>
 
             {imgUrl && (
-              <Flex
-                mt={5}
-                w={"full"}
-                position={"relative"}
-                justify={"center"}
-                // textAlign={"center"}
-              >
-                <Image src={imgUrl} alt="Selected img" paddingLeft={50} />
+              <Flex mt={5} w={"full"} position={"relative"} justify={"center"}>
+                <Image
+                  src={imgUrl}
+                  alt="Selected img"
+                  paddingLeft={50}
+                  maxW="70vw"
+                  maxH="70vh"
+                />
                 <CloseButton
                   onClick={() => {
                     setImgUrl("");

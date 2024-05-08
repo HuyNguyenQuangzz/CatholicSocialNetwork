@@ -1,4 +1,4 @@
-import { Flex, Image, Link, useColorMode } from "@chakra-ui/react";
+import { Button, Flex, Image, Link, useColorMode } from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { AiFillHome } from "react-icons/ai";
@@ -11,6 +11,7 @@ import {
 } from "react-icons/md";
 // import { CiShoppingCart } from "react-icons/ci";
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import { RiAdminFill } from "react-icons/ri";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -27,6 +28,7 @@ const Header = () => {
       top={0}
       bg={colorMode === "light" ? "base" : "dark-lg"}
       w={"full"}
+
       // zIndex={999}
       p={4}
       rounded={"lg"}
@@ -89,14 +91,13 @@ const Header = () => {
           {/* <Link as={RouterLink} to={`/cart`} pl={500}>
             <CiShoppingCart size={30} />
           </Link> */}
-          {/* 
-          <Link as={RouterLink} to={`/settings`}>
-            <MdOutlineSettings size={24} />
-          </Link>
 
-          <Button size={"xxs"} onClick={logout}>
-            <FiLogOut size={24} />
-          </Button> */}
+          {/* isAdmin: { type: Boolean,  default: false,}, only true wil show this */}
+          {/* {user?.isAdmin && ( */}
+          <Link as={RouterLink} to={`/admin`}>
+            <RiAdminFill size={24} />
+          </Link>
+          {/* )} */}
         </Flex>
       )}
 

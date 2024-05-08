@@ -46,17 +46,21 @@ const UserPage = () => {
     );
   }
 
-  if (!user && !loading) return
-  (
-    <>
-		<Flex flexDir='column' textAlign={"center"} mx={"auto"}>
-			<Text fontSize={"2xl"}>User Not Found</Text>
-			<Link as={RouterLink} to={"/"} color={"blue.500"} w={"max-content"} mx={"auto"}>
-				Go home
-			</Link>
-		</Flex>
-    </>
-  ); // Redirect to login page when not logged in
+  if (!user && !loading) return;
+  <>
+    <Flex flexDir="column" textAlign={"center"} mx={"auto"}>
+      <Text fontSize={"2xl"}>User Not Found</Text>
+      <Link
+        as={RouterLink}
+        to={"/"}
+        color={"blue.500"}
+        w={"max-content"}
+        mx={"auto"}
+      >
+        Go home
+      </Link>
+    </Flex>
+  </>; // Redirect to login page when not logged in
   // <h1>User not found</h1>;
 
   return (

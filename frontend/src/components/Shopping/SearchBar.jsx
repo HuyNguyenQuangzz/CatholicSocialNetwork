@@ -1,5 +1,5 @@
-import React from "react";
-import TextField from "@mui/material/TextField";
+
+import { Input } from "@chakra-ui/react";
 
 const SearchBar = ({ onSearch }) => {
   const handleChange = (event) => {
@@ -7,11 +7,13 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <TextField
+    <Input
+      // color={"red"}
+      backgroundColor={"gray"}
       label="Search"
       variant="outlined"
       onChange={handleChange}
-      width="900"
+      // width="900"
       style={{
         marginRight: 25,
         // marginTop: "15vh",

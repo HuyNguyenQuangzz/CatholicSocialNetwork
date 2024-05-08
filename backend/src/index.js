@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 
 
@@ -37,6 +38,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/products", productRoutes)
 app.use("/api/messages", messageRoutes);
 
 // http://localhost:5000 => backend,frontend

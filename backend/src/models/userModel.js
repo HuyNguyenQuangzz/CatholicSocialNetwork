@@ -83,12 +83,16 @@ const userSchema = mongoose.Schema(
     // Bio
     bio: {
       type: String,
-      default: "",
+      default: "I'm a new user",
     },
     // is Frozen?
     isFrozen: {
       type: Boolean,
       default: false,
+    },
+    favorites: {
+      type: Array,
+      default: [],
     },
   },
   {

@@ -8,7 +8,7 @@ const useLogout = () => {
 
   const logout = async () => {
     try {
-      if (!window.confirm("Are you sure to logout?")) return;
+      // if (!window.confirm("Are you sure to logout?")) return;
 
       // const res = await fetch("/api/users/logout", {
       const res = await fetch("/api/auth/logout", {
