@@ -23,6 +23,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  useToast,
 } from "@chakra-ui/react";
 // import { MdStar } from "react-icons/md";
 import { cartState } from "../../atoms/cartAtom";
@@ -31,12 +32,11 @@ import { useEffect, useState } from "react";
 // import { productsState } from "../../atoms/productAtom";
 import { Link } from "react-router-dom";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   const [cart, setCartState] = useRecoilState(cartState);
-  // const [products, setProducts] = useRecoilState(productsState);
   const [products, setProducts] = useState([]);
-  // const [product, setProductState] = useRecoilState(productsState);
-
+  const toast = useToast(); // Add toast for notification
+  const [quantity, setQuantity] = useState(1); // Manage quantity state
   useEffect(() => {
     // Gửi yêu cầu API để lấy danh sách sản phẩm
     fetch("/api/products/list")
@@ -44,19 +44,6 @@ const ProductCard = () => {
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
-
-  const handleAddToCart = (product) => {
-    // Concise logic for adding item with quantity update
-    const newItem = { ...product, quantity: 1 };
-    const exists = cart.find((item) => item.id === product.id);
-    setCartState(
-      exists ? updateCartWithQuantity(cart, newItem) : [...cart, newItem]
-    );
-  };
-
-  const updateCartWithQuantity = (cart, newItem) => {
-    return cart.map((item) => (item.id === newItem.id ? newItem : item));
-  };
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState("");
@@ -75,6 +62,54 @@ const ProductCard = () => {
   const [showMore, setShowMore] = useState(false);
   const handleShowMore = () => {
     setShowMore(!showMore); // Toggle showMore state
+  };
+
+  const handleAddToCart = (product) => {
+    // const existsItem = cart.find((item) => item.id === product.id);
+
+    // if (existsItem) {
+    //   setCartState(
+    //     cart.map((item) =>
+    //       item.id === product.id
+    //         ? { ...item, quantity: item.quantity + 1 }
+    //         : item
+    //     )
+    //   );
+    // } else {
+    //   setCartState((items) => [
+    //     ...items,
+    //     { id: product.id, price: product.price, quantity: 1 },
+    //   ]);
+    // }
+
+    toast({
+      // Display success notification
+      title: "Added product to Cart!",
+      description: "Product has been added to your cart.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+  const handleBuyNow = () => {
+    toast({
+      title: "Buying Product!",
+      description: "Checking out.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+  const updateCartWithQuantity = (cart, newItem) => {
+    return cart.map((item) => (item.id === newItem.id ? newItem : item));
+  };
+
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value);
+    if (isNaN(newQuantity) || newQuantity <= 0) {
+      return; // Prevent invalid quantities, avoid unnecessary updates
+    }
+    setQuantity(newQuantity);
   };
 
   return (
@@ -115,13 +150,17 @@ const ProductCard = () => {
               {/* <Divider /> */}
               <CardFooter mt={-7}>
                 <ButtonGroup spacing="2">
-                  <Button variant="solid" colorScheme="blue">
+                  <Button
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => handleBuyNow(products)}
+                  >
                     Buy now
                   </Button>
                   <Button
                     variant="ghost"
                     colorScheme="blue"
-                    // onClick={() => handleAddToCart(products)}
+                    onClick={() => handleAddToCart(products)}
                   >
                     Add to cart
                   </Button>

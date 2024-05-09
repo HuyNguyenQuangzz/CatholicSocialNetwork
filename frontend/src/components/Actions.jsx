@@ -224,10 +224,13 @@ const Actions = ({ post }) => {
       </Flex>
 
       {/* Modal to comment */}
-      <Modal isOpen={isOpen} onClose={onClose} mt={30}>
-        <ModalOverlay />
+      <Modal isOpen={isOpen} onClose={onClose} mt={30} isCentered>
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
         <ModalContent>
-          <ModalHeader></ModalHeader>
+          <ModalHeader textAlign={"center"}>Comment</ModalHeader>
           <ModalCloseButton />
 
           <ModalBody pb={10}>

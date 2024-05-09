@@ -1,6 +1,8 @@
-
+// import React from "react";
 import { Input } from "@chakra-ui/react";
 
+// Can you help me improve my search? For example, if the user enters any letter, 
+//the system will display the user containing the character the user entered?
 const SearchBar = ({ onSearch }) => {
   const handleChange = (event) => {
     onSearch(event.target.value);
@@ -9,7 +11,7 @@ const SearchBar = ({ onSearch }) => {
   return (
     <Input
       // color={"red"}
-      backgroundColor={"gray"}
+      backgroundColor={"gray.500"}
       label="Search"
       variant="outlined"
       onChange={handleChange}

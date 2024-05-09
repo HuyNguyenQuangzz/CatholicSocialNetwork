@@ -18,11 +18,7 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
-
-  // handle get all product with fetch API
-
-  // .then((res) => res.
-
+  let [loading, setLoading] = useState(true);
   const handlePriceChange = (newValue) => {
     setMinPrice(newValue[0]);
     setMaxPrice(newValue[1]);
@@ -30,44 +26,39 @@ const Home = () => {
 
   const onSearch = (value) => {
     setSearchQuery(value);
-    // const filtered = products.filter(
-    //   (p) =>
-    //     p.title.toLowerCase().includes(value.toLowerCase()) ||
-    //     p.brand.toLowerCase().includes(value.toLowerCase())
-    // );
-    // setFilteredProducts(filtered);
   };
+  useEffect(() => {
+    // Gửi yêu cầu API để lấy danh sách sản phẩm
+    fetch("/api/products/list")
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => console.error("Error fetching products:", error));
+    // setProducts(response.data.products);
+  }, [setProducts]);
 
-  // useEffect(() => {
-  //   const filtered = products
-  //     .filter(
-  //       (product) =>
-  //         product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //         product.brand.toLowerCase().includes(searchQuery.toLowerCase())
-  //     )
-  //     .filter(
-  //       (product) => product.price >= minPrice && product.price <= maxPrice
-  //     );
-  //   setFilteredProducts(filtered);
-  // }, [products, searchQuery, minPrice, maxPrice]);
+  // handle search product
+
 
   return (
     <>
       <Navbar />
 
-      <Carousel />  
-      
+      <Carousel />
+
       <Container>
         {/* <Heading>Cart</Heading> */}
 
         <Flex>
-          <Heading>Search</Heading>
+          <Heading pr={2}>Search</Heading>
           <SearchBar onSearch={onSearch} />
-          <PriceFilter
-          // minPrice={minPrice}
-          // maxPrice={maxPrice}
-          // onChange={handlePriceChange}
-          />
+          {/* <PriceFilter
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            onChange={handlePriceChange}
+          /> */}
         </Flex>
 
         <Flex

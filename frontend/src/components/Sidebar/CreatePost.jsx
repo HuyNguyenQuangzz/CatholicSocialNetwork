@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import usePreviewImg from "../../hooks/usePreviewImg";
-import { BsFillImageFill } from "react-icons/bs";
+import { LuImagePlus } from "react-icons/lu";
 import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../../atoms/userAtom";
 import useShowToast from "../../hooks/useShowToast";
@@ -117,26 +117,29 @@ const CreatePost = () => {
       </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} size="5xl">
-        <ModalOverlay />
-
+      <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
         <ModalContent>
-          <ModalHeader textAlign={"center"}>Create Post</ModalHeader>
+          <ModalHeader textAlign={"center"}>Create New Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
               <Textarea
-                placeholder=" What in your mind..."
+                placeholder="What in your mind..."
                 onChange={handleTextChange}
                 value={postText}
                 size="5xl"
                 height={200}
+                pl={5}
               />
               <Text
                 fontSize="xs"
                 fontWeight="bold"
                 textAlign={"right"}
                 m={"1"}
-                color={"gray.800"}
+                // color={"gray.800"}
               >
                 {remainingChar}/{MAX_CHAR}
               </Text>
@@ -148,7 +151,7 @@ const CreatePost = () => {
                 onChange={handleImageChange}
               />
 
-              <BsFillImageFill
+              <LuImagePlus
                 style={{
                   marginLeft: "50%",
                   cursor: "pointer",

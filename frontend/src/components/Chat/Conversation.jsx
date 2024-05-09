@@ -25,8 +25,8 @@ const Conversation = ({ conversation, isOnline }) => {
   const colorMode = useColorMode();
 
   // API CHAT GPT : sk-proj-UJllcyj5jWkF9lNlxW7dT3BlbkFJ1fI7mspkTKXxy6dvsEOo
-
   console.log("selectedConverstion", selectedConversation);
+
   return (
     <Flex
       gap={4}
@@ -34,7 +34,7 @@ const Conversation = ({ conversation, isOnline }) => {
       p={"1"}
       _hover={{
         cursor: "pointer",
-        bg: useColorModeValue("gray.600", "gray.dark"),
+        bg: useColorModeValue("gray.600", "gray"),
         color: "white",
       }}
       onClick={() =>

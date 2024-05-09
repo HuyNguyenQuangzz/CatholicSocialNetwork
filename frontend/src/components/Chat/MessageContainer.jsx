@@ -8,6 +8,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { CiSettings } from "react-icons/ci";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import { useEffect, useRef, useState } from "react";
@@ -124,6 +125,7 @@ const MessageContainer = () => {
       bg={useColorModeValue("gray.200", "gray.dark")}
       borderRadius={"md"}
       p={2}
+      marginLeft={20}
       flexDirection={"column"}
     >
       {/* Message header */}
@@ -133,6 +135,11 @@ const MessageContainer = () => {
           {selectedConversation.username}{" "}
           <Image src="/verified.png" w={4} h={4} ml={1} />
         </Text>
+        {/* <Text fontSize={"xs"}>Last seen</Text> */}
+        <Text paddingLeft={"130px"} fontSize={"xs"}>
+          just now
+        </Text>
+        <CiSettings size={24} />
       </Flex>
 
       <Divider />

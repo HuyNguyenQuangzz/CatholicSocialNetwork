@@ -23,6 +23,7 @@ import {
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { BsFillImageFill } from "react-icons/bs";
 import usePreviewImg from "../../hooks/usePreviewImg";
+import { EmojiPicker } from "react-emoji";
 
 const MessageInput = ({ setMessages }) => {
   const [messageText, setMessageText] = useState("");
@@ -33,6 +34,35 @@ const MessageInput = ({ setMessages }) => {
   const { onClose } = useDisclosure();
   const { handleImageChange, imgUrl, setImgUrl } = usePreviewImg();
   const [isSending, setIsSending] = useState(false);
+  const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState(null);
+
+  const EmojiIconButton = () => {
+    return (
+      <div onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}>
+        {selectedEmoji ? selectedEmoji : <IoSendSharp />}
+      </div>
+    );
+  };
+  const handleSendMessageWithEmoj = (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    if (messageText) {
+      // Send message (your logic here)
+
+      // Optionally clear message and emoji after sending
+      setMessageText("");
+      setSelectedEmoji(null);
+    } else if (selectedEmoji) {
+      // Send emoji-only message (optional)
+      // ... your logic to send emoji
+    }
+  };
+
+  const handleEmojiClick = (event, emojiObject) => {
+    setSelectedEmoji(emojiObject.emoji);
+    setIsEmojiPickerOpen(false); // Close picker after selection
+  };
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -94,6 +124,16 @@ const MessageInput = ({ setMessages }) => {
             onChange={(e) => setMessageText(e.target.value)}
             value={messageText}
           />
+          <InputRightElement
+            onClick={() => setIsEmojiPickerOpen(!isEmojiPickerOpen)}
+            cursor={"pointer"}
+          >
+            <EmojiIconButton />
+          </InputRightElement>
+          {/* </InputGroup> */}
+          {/* {isEmojiPickerOpen && <EmojiPicker onEmojiClick={handleEmojiClick} />} */}
+          {/* </form> */}
+          {/* help me handle allow user click to icon reaction like 😝🤣😚😚😋😂 */}
           <InputRightElement onClick={handleSendMessage} cursor={"pointer"}>
             <IoSendSharp />
           </InputRightElement>
@@ -115,12 +155,15 @@ const MessageInput = ({ setMessages }) => {
           setImgUrl("");
         }}
       >
-        <ModalOverlay />
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
         <ModalContent>
-          <ModalHeader></ModalHeader>
+          <ModalHeader textAlign={"center"}>Send Image</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex mt={5} w={"full"}>
+            <Flex w={"full"}>
               <Image src={imgUrl} />
             </Flex>
             <Flex justifyContent={"flex-end"} my={2}>

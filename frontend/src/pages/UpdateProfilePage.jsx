@@ -142,7 +142,7 @@ export default function UpdateProfilePage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Flex align={"center"} textAlign={"center"} my={6}>
+      <Flex align={"center"} textAlign={"center"} ml={20}>
         <Stack
           spacing={2}
           w={"full"}

@@ -131,8 +131,10 @@ const ChatPage = () => {
   };
 
   return (
+    <>
     <Box
       position={"absolute"}
+      marginLeft={20}
       left={"35%"}
       w={{ base: "100%", md: "80%", lg: "750px" }}
       p={4}
@@ -231,6 +233,7 @@ const ChatPage = () => {
         {selectedConversation._id && <MessageContainer />}
       </Flex>
     </Box>
+    </>
   );
 };
 

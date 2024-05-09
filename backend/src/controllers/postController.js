@@ -119,8 +119,7 @@ const sharePost = async (req, res) => {
       userId,
       postId,
     };
-    await Share.create(newShare);
-
+    // help me handle function share post
     res.sendStatus(200);
   } catch (error) {
     res.status(500).json({ error: error.message });

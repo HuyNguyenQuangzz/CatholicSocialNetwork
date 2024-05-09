@@ -9,7 +9,9 @@ const productSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    image: { type: String, required: true },
+    image: { type: String, 
+      // required: true 
+    },
     // category
     type: { type: String, required: true },
     price: {
@@ -23,25 +25,6 @@ const productSchema = new mongoose.Schema(
     discount: { type: Number },
     // sales
     selled: { type: Number },
-
-    // image: String,
-    // category: {
-    //"category"    : name of reference field
-    //   type: mongoose.SchemaTypes.ObjectId,
-    //   ref: "categories", //"categories"  : name of reference collection
-    // },
-    // size: String,
-    // color: String,
-    // number: {
-    //   type: Number,
-    //   min: [1, "Inventory number can not at less 1"],
-    //   default: 1,
-    //   max: [999, "Can't be greater than 999 product"],
-    //   required: true,
-    // },
-    // brand: String,
-    // material: String,
-    // description: String,
   },
   {
     timestamps: true,
