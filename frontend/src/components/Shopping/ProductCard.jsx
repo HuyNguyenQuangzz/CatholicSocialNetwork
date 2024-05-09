@@ -126,6 +126,8 @@ const ProductCard = ({ product }) => {
                 cursor={"pointer"}
               >
                 <Image
+                  height={200}
+                  w={"full"}
                   src={product.image}
                   alt={product.name}
                   borderRadius="lg"

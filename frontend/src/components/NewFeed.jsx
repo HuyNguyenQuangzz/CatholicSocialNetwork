@@ -1,6 +1,6 @@
 // import axios from "axios";
 
-import { Container, Text } from "@chakra-ui/react";
+import { Container, Spinner, Text } from "@chakra-ui/react";
 
 const NewFeed = () => {
   //   const [articles, setArticles] = useState([]);
@@ -33,7 +33,7 @@ const NewFeed = () => {
   //   }
 
   return (
-    <Container textAlign={"center"}>
+    <Container textAlign={"center"} pb={10}>
       {/* {articles.map((article) => (
         <div key={article.link}>
           <a href={article.link}>{article.title}</a>
@@ -76,12 +76,12 @@ const NewFeed = () => {
         come and stay at my home," and she prevailed on us.
         <br />
       </p>
-      <h3>Reading 1: </h3>
+      {/* <h3>Reading 1: </h3>
       <h3>Reading 2: </h3>
-      <h4>Alleluia: </h4>
+      <h4>Alleluia: </h4> */}
 
       {/* // Responsive version */}
-      <Text noOfLines={[1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]}>
+      {/* <Text noOfLines={[1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]}>
       A reading from the Acts of the Apostles
       Acts 18:1-8
 
@@ -108,7 +108,8 @@ const NewFeed = () => {
       Crispus, the synagogue official, came to believe in the Lord
       along with his entire household, and many of the Corinthians
       who heard believed and were baptized.
-      </Text>
+      </Text> */}
+      {/* <Spinner/> */}
     </Container>
   );
 };

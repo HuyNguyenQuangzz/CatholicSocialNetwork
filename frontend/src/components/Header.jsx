@@ -1,4 +1,11 @@
-import { Button, Flex, Image, Link, useColorMode } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Image,
+  Link,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { AiFillHome } from "react-icons/ai";
@@ -28,7 +35,6 @@ const Header = () => {
       top={0}
       bg={colorMode === "light" ? "base" : "dark-lg"}
       w={"full"}
-
       // zIndex={999}
       p={4}
       rounded={"lg"}
@@ -93,13 +99,22 @@ const Header = () => {
           </Link> */}
 
           {/* isAdmin: { type: Boolean,  default: false,}, only true wil show this */}
-          {/* {user?.isAdmin && ( */}
-          <Link as={RouterLink} to={`/admin`}>
-            <RiAdminFill size={24} />
-          </Link>
-          {/* )} */}
+          {user && (
+            <Link as={RouterLink} to={`/admin`}>
+              <RiAdminFill size={24} />
+            </Link>
+          )}
         </Flex>
       )}
+
+      {/* isAdmin: { type: Boolean,  default: false,}, only true will show this */}
+      {/* {user?.isAdmin === true ? (
+        <Link as={RouterLink} to={`/admin`}>
+          <RiAdminFill size={24} /> Admin Panel
+        </Link>
+      ) : (
+        <Text>Not Admin</Text> // Or a placeholder message
+      )} */}
 
       {!user && (
         <Link
